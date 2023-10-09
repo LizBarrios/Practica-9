@@ -2,13 +2,102 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdbool.h>
 
 int validarNumeros(char mensaje[], int ri, int rf);
 int Buscar(int vect[], int n, int num);
 int repetir();
-int llenar_vector_sin_repetir(int vec[], int n, int ri, int rf);
+int VectSinRep(int vec[], int n, int ri, int rf);
 int random(int ri, int rf);
-int imprimirVec(int vec[]);
+int imprimirVec(char msg[], int vec[], int n);
+void matriz4x4(int matriz[4][4], int ri, int rf);
+void imprimirMatriz(int matriz[][4], int m, int n, char mensaje[]);
+void ordenarVec(int vec[], int n);
+void buscarValor();
+
+void buscarValor(int vec[], int n)
+{
+    int i, encontrado = 0, numero;
+    numero = validarNumeros("INGRESE EL NUMERO: ", 0, 10000);
+    for (i = 0; i < n; i++)
+    {
+        if (vec[i] == numero)
+        {
+            printf("El numero %d se encuentra el el lugar [%d]\n", numero, i);
+            encontrado = 1;
+        }
+    }
+    if (encontrado == 0)
+    {
+        printf("El numero no se encuentra en el vector\n");
+    }
+}
+
+// para ordenar el vector
+void ordenarVec(int vec[], int n)
+{
+    int i, j, temp;
+    int ordenado = 0;
+
+    for (i = 0; i < n - 1; i++)
+    {
+        ordenado = 1;
+        for (j = 0; j < n - i - 1; j++)
+        {
+            if (vec[j] > vec[j + 1])
+            {
+                temp = vec[j];
+                vec[j] = vec[j + 1];
+                vec[j + 1] = temp;
+                ordenado = 0;
+            }
+        }
+    }
+}
+
+// para imprimir la matriz
+void imprimirMatriz(int matriz[][4], int m, int n, char mensaje[])
+{
+    int i, j;
+    printf("%s:\n", mensaje);
+    for (i = 0; i < m; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            printf("[%3d]  ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+// para llenar la matriz
+void matriz4x4(int matriz[4][4], int ri, int rf)
+{
+    srand(time(NULL));
+    int i, j, repe, vec[16];
+    for (i = 0; i < 16; i++)
+    {
+        do
+        {
+            vec[i] = random(ri, rf);
+            repe = 0;
+            for (j = 0; j < i; j++)
+            {
+                if (vec[i] == vec[j])
+                {
+                    repe = 1;
+                }
+            }
+        } while (repe == 1);
+    }
+    for (i = 0; i < 4; i++)
+    {
+        for (j = 0; j < 4; j++)
+        {
+            matriz[i][j] = vec[i * 4 + j];
+        }
+    }
+}
 
 // valida la entrada de numeros
 int validarNumeros(char mensaje[], int ri, int rf)
@@ -44,7 +133,7 @@ int repetir()
     }
 }
 
-// busca los numeros repetidos
+// busca los numeros repetidos en vector
 int Buscar(int vect[], int n, int num)
 {
     int i;
@@ -58,17 +147,19 @@ int Buscar(int vect[], int n, int num)
     return -1;
 }
 
+// buscar los numeros repetidos en matriz
+
 // llenar vector sin repetir num
-int llenar_vector_sin_repetir(int vec[], int n, int ri, int rf)
+int VectSinRep(int vec[], int n, int ri, int rf)
 {
-    int i, num, rango;
+    int i, num;
     for (i = 0; i < n; i++)
     {
         do
         {
             num = random(ri, rf);
         } while (Buscar(vec, i, num) != -1);
-        vect[i] = num;
+        vec[i] = num;
     }
 }
 
@@ -81,7 +172,12 @@ int random(int ri, int rf)
 }
 
 // funcion para imprimir el vetor
-int imprimirVec(int vec[])
+int imprimirVec(char msg[], int vec[], int n)
 {
-    printf("%d");
+    int i;
+    printf("%s\n", msg);
+    for (i = 0; i < n; i++)
+    {
+        printf("[%1d]\n", vec[i]);
+    }
 }

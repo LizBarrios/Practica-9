@@ -29,11 +29,14 @@ ACTIVIDAD 9
 #include <stdlib.h>
 #include "Lizeth.h"
 
+int vec[15];
+int mat[4][4];
+
 int main()
 {
     srand(time(NULL));
-    int menu, matriz[4][4];
-    int opc, n, vec[n], vector, imp;
+    int menu;
+    int opc, n;
     do
     {
         menu = 0;
@@ -45,27 +48,27 @@ int main()
             printf("FIN DEL PROGRAMA");
             break;
         case 1:
-            // Llenar vector con 15 números, los números generados aleatoriamente, los números entre el rango de 100 al 200(no repetidos)
-            imp=llenar_vector_sin_repetir(vec, 15, 100, 200);
+            VectSinRep(vec, 15, 100, 200);
             menu = repetir();
             break;
         case 2:
-            // LLENAR MATRIZ .- Llenar la matriz de 4x4 con con números generados aleatoriamente, números entre el rango de 1 al 16(no repetidos)
+            matriz4x4(mat, 1, 16);
             menu = repetir();
             break;
         case 3:
-            // IMPRIMIR VECTOR .- Imprime el vector que se envíe, donde la función recibe como parámetro el vector,tamaño, nombre del vector.
-            printf("---vector---/n");
-            printf("%d", imp);
+            imprimirVec("==vector==", vec, 15);
             menu = repetir();
             break;
         case 4:
+            imprimirMatriz(mat, 4, 4, "==Matriz==");
             menu = repetir();
             break;
         case 5:
+            ordenarVec(vec, 15);
             menu = repetir();
             break;
         case 6:
+            buscarValor(vec, 15);
             menu = repetir();
             break;
         }
